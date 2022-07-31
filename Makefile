@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/07/25 10:25:14 by libacchu         ###   ########.fr        #
+#    Updated: 2022/07/31 21:39:02 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,15 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRC_DIR = ./src
 SRC = $(SRC_DIR)/main.c \
-		$(SRC_DIR)/parser.c \
 		$(SRC_DIR)/ft_free.c \
-		$(SRC_DIR)/ft_initialscan.c \
-		$(SRC_DIR)/errors01.c \
 		$(SRC_DIR)/exector.c \
+		$(SRC_DIR)/exe_library.c \
+		$(SRC_DIR)/handler.c \
+		$(SRC_DIR)/make_cmd.c \
 		$(SRC_DIR)/builtins/echo.c \
+		$(SRC_DIR)/builtins/pwd.c \
+		$(SRC_DIR)/builtins/env.c \
+		$(SRC_DIR)/builtins/isbuiltin.c\
 
 OBJS = $(SRC:%.c=%.o)
 RM = rm -f
@@ -31,6 +34,7 @@ RL_MAC = -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew
 $(NAME): $(OBJS)
 	make -C ./libft
 	make -C ./libft/ft_printf
+	make bonus -C ./libft/
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(FT_PRINTF) $(RL_MAC) -o $(NAME)
 
 LIBFT_DIR = ./libft

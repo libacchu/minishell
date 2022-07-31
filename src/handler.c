@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors01.c                                         :+:      :+:    :+:   */
+/*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mluik <mluik@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 14:33:09 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/20 15:17:37 by mluik            ###   ########.fr       */
+/*   Created: 2022/07/31 16:40:13 by libacchu          #+#    #+#             */
+/*   Updated: 2022/07/31 19:24:30 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exit_w_error(char *message)
+int	ft_prog_handler(t_minishell *shell, char *command_buf)
 {
-	ft_putstr_fd(message, 1);
-	exit(0);
+	shell->commands = ft_make_cmd(command_buf);
+	return (0);
 }

@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   make_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mluik <mluik@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 12:15:19 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/22 14:41:19 by mluik            ###   ########.fr       */
+/*   Created: 2022/07/31 16:48:04 by libacchu          #+#    #+#             */
+/*   Updated: 2022/07/31 20:19:46 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	parse(char *command_buf, t_minishell *minishell)
+char	**ft_make_cmd(char *command_buf)
 {
-	ft_initialscan(command_buf, minishell);
-	return (0);
+	char	**output;
+
+	output = ft_split(command_buf, ' ');
+	
+	return (output);
 }

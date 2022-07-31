@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:25:29 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/27 13:37:40 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:36:11 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ a list.
 new: The address of a pointer to the node to be
 added to the list.
 */
-t_list *cmds
-t_list	new;
-
-ft_lstadd_back(&cmds, &new);
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

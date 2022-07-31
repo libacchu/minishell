@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/28 11:35:38 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:20:28 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **env)
 {
 	t_minishell	minishell;
 	char		*command_buf;
-	// t_minishell = (t_minishell){}};
-	// IMPORT ENV!!! Will stay in the main = bottom of stack; and will be removed when the program is eliminated
+
+	env_create_lst(&minishell, env);
 	while (1)
 	{
 		command_buf = readline("minishell> ");
@@ -25,8 +25,10 @@ int	main(int argc, char **argv, char **env)
 			add_history(command_buf);
 		if (!strcmp(command_buf, "exit"))
 			break ;
-		parse(command_buf, &minishell);
-	/* 		executor(...); */
+		ft_prog_handler(&minishell, command_buf);
+		execute_cmd(&minishell, minishell.commands);
 	}
+	(void)argc;
+	(void)argv;
 	return (0);
 }

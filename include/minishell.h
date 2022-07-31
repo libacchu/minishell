@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/29 13:31:00 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:23:00 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,40 +23,29 @@
 # include "../libft/libft.h"
 # include "../libft/ft_printf/ft_printf.h"
 
-/* typedef struct s_env {
-	//whatever it gets from the parent environment has to be saved here
-}	t_env; */
-
-typedef struct s_parselist {
-	int						index;
-	int						prio_category;
-	int						token_category;
-	char					*cmd_str;
-	struct s_parselist		*next; // original->next; original->next->next;
-}	t_parselist;
-
-typedef struct s_finalcmd {
-	char			**argv;
-	int				redirect_type;
-}	t_finalcmd;
-
-typedef struct s_cmd_data
+typedef struct s_minishell
 {
-	int				data;
-}	t_cmd_data;
-
-typedef struct s_minishell {
-	struct s_parselist		*substrings;
-/* 	s_finalcmd		*finalcmdtable; // == argv */
+	t_list		*env;
+	char		**commands;
 }	t_minishell;
 
-void		exit_w_error(char *message);
-int			ft_scanforfield(char c, char *string);
-int			ft_initialscan(char *command_buf, t_minishell *minishell);
-void		ft_free_substring(char **substring);
-int			parse(char *command_buf, t_minishell *minishell);
-
 /* Builtin commands */
+int			is_builtin_cmd(char *cmd);
 int			ft_echo(int ac, char **av);
+int			ft_pwd(void);
+
+/* Program Handler*/
+char		**ft_make_cmd(char *command_buf);
+int			ft_prog_handler(t_minishell *shell, char *command_buf);
+int			env_create_lst(t_minishell *shell, char **env);
+
+/* Execution */
+int			execute_cmd(t_minishell *shell, char **args);
+int			exe_builtin(t_minishell *shell, char **args);
+int			exe_lib(t_minishell *shell);
+int			exe_builtin(t_minishell *shell, char **args);
+
+/* Freeing Functions */
+void		ft_free_substring(char **substring);
 
 #endif

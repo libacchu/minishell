@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exector.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/29 14:35:48 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 21:02:24 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,64 +47,33 @@
 // 		perror("Command not executed\n");
 // 	return (0);
 // }
-void	ft_free_substring(char **substring)
+
+int	execute_cmd(t_minishell *shell, char **args)
 {
-	int	i;
-
-	i = 0;
-	while (substring[i])
-	{
-		free(substring[i]);
-		substring[i] = NULL;
-		i++;
-	}
-	free(substring);
-	substring = NULL;
-}
-
-
-char	**get_dir_path(char **env)
-{
-	int		i;
-	char	*path;
-	char	*tmp;
-	char	**cmd_paths;
-
-	i = 0;
-	tmp = NULL;
-	while (env[i])
-	{
-		if (strncmp(env[i], "PATH=/", 6) == 0)
-		{
-			tmp = ft_strdup(env[i]);
-			break ;
-		}
-		i++;
-	}
-	path = ft_strtrim(tmp, "PATH=");
-	cmd_paths = ft_split(path, ':');
-	free(tmp);
-	free(path);
-	return (cmd_paths);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	// char	*cmd;
-	char	**option;
-	int	i;
-
-	(void)ac;
-	(void)av;
-	option = get_dir_path(env);
-	i = 0;
-	while (option[i])
-	{
-		printf("%s\n", option[i]);
-		i++;
-	}
-	ft_free_substring(option);
-	// cmd = av[1];
-	// exector(cmd, option, env);
+	if (is_builtin_cmd(args[0]))
+		exe_builtin(shell, args);
+	else
+		exe_lib(shell);
 	return (0);
 }
+
+// int	main(int ac, char **av, char **env)
+// {
+// 	// char	*cmd;
+// 	char	**option;
+// 	int	i;
+
+// 	(void)ac;
+// 	(void)av;
+// 	option = get_dir_path(env);
+// 	i = 0;
+// 	while (option[i])
+// 	{
+// 		printf("%s\n", option[i]);
+// 		i++;
+// 	}
+// 	ft_free_substring(option);
+// 	// cmd = av[1];
+// 	// exector(cmd, option, env);
+// 	return (0);
+// }
