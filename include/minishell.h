@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/31 19:23:00 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 22:33:47 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct s_minishell
 {
 	t_list		*env;
+	char		**envp;
 	char		**commands;
 }	t_minishell;
 

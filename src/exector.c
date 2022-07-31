@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/31 21:02:24 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 22:51:06 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,18 @@
 
 int	execute_cmd(t_minishell *shell, char **args)
 {
+	int	id;
+
 	if (is_builtin_cmd(args[0]))
 		exe_builtin(shell, args);
 	else
-		exe_lib(shell);
+	{
+		id = fork();
+		if (id == 0)
+			exe_lib(shell);
+		else
+			waitpid(id, NULL, 0);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/31 20:20:28 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/07/31 22:35:52 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **env)
 	t_minishell	minishell;
 	char		*command_buf;
 
+	// minishell.envp = env;
 	env_create_lst(&minishell, env);
 	while (1)
 	{
