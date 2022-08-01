@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/31 22:33:47 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/01 09:48:24 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_minishell
 int			is_builtin_cmd(char *cmd);
 int			ft_echo(int ac, char **av);
 int			ft_pwd(void);
+int			ft_env(t_list *env);
+int			ft_cd(char *new_dir, t_minishell *shell);
 
 /* Program Handler*/
 char		**ft_make_cmd(char *command_buf);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/07/31 21:39:02 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/01 09:24:16 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/make_cmd.c \
 		$(SRC_DIR)/builtins/echo.c \
 		$(SRC_DIR)/builtins/pwd.c \
+		$(SRC_DIR)/builtins/cd.c \
 		$(SRC_DIR)/builtins/env.c \
 		$(SRC_DIR)/builtins/isbuiltin.c\
 

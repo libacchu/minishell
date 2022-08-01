@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   isbuiltin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 21:54:09 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/31 21:47:35 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/01 10:33:39 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	is_builtin_cmd(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
 		return (TRUE);
-	// if (!ft_strcmp(cmd, "cd"))
-	// 	return (TRUE);
+	if (!ft_strcmp(cmd, "cd"))
+		return (TRUE);
 	if (!ft_strcmp(cmd, "pwd"))
 		return (TRUE);
 	// if (!ft_strcmp(cmd, "export"))
 	// 	return (TRUE);
 	// if (!ft_strcmp(cmd, "unset"))
 	// 	return (TRUE);
-	// if (!ft_strcmp(cmd, "env"))
-	// 	return (TRUE);
+	if (!ft_strcmp(cmd, "env"))
+		return (TRUE);
 	// if (!ft_strcmp(cmd, "exit"))
 	// 	return (TRUE);
 	return (FALSE);
@@ -57,5 +57,9 @@ int	exe_builtin(t_minishell *shell, char **args)
 		ft_echo(size_of_arry(args), args);
 	if (!ft_strcmp(args[0], "pwd"))
 		ft_pwd();
+	if (!ft_strcmp(args[0], "env"))
+		ft_env(shell->env);
+	if (!ft_strcmp(args[0], "cd"))
+		ft_cd(args[1], shell);
 	return (0);
 }
