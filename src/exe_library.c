@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_library.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 22:51:02 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/31 22:34:55 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/02 20:33:29 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

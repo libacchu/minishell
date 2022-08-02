@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:26:03 by libacchu          #+#    #+#             */
-/*   Updated: 2022/04/05 09:56:28 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:09:02 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstnew(void *content)
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
-		return (NULL);
+		return (NULL);	
 	new_node->content = content;
 	new_node->next = NULL;
 	return (new_node);
