@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/31 22:51:06 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:56:51 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,44 @@
 // 	return (0);
 // }
 
-int	execute_cmd(t_minishell *shell, char **args)
+int	ft_execute_cmd(t_minishell *shell, char **args)
 {
-	int	id;
+	/* Save the stdin and out into two fd.*/
+	int	tmpin;
+	int	tmpout;
+	tmpin = dup(0);
+	tmpout = dup(1);
+	
+	/* check for input redirection */
+	int	fdin;
+	if (infile)
+		fdin = open(infile, O_READ);
+	else
+		fdin = dup(tmpin);
 
+	/* Creates a process for every command */
+	int id;
+	int	fdout;
+	int	i;
+	
+	i = 0;
+	while(i < numofcmds)
+	{
+		// redirecting input
+		dup2(fdin, 0);
+		close(fdin);
+	}
+	if (i == numofcmds - 1)
+	{
+		// last command	
+		if (outfile)
+			fdout = open(outfile, );
+	}
+	else
+	{
+		fdout = dup(tmpout);
+	}
+	
 	if (is_builtin_cmd(args[0]))
 		exe_builtin(shell, args);
 	else
