@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_last.c                                      :+:      :+:    :+:   */
+/*   ft_env_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/02 18:56:31 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/04 13:56:10 by libacchu         ###   ########.fr       */
+/*   Created: 2022/08/04 12:49:02 by libacchu          #+#    #+#             */
+/*   Updated: 2022/08/04 12:57:29 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_envlist	*ft_env_last(t_envlist **env)
+int	ft_env_print(t_envlist *env)
 {
-	t_envlist *tmp;
-	
-	tmp = *env;
-	while (tmp && tmp->next)
+	if (!env)
+		return (1);
+	while (env)
 	{
-		printf("--last-\n");
-		// if (!tmp->next)
-		// 	return (tmp);
-		tmp = tmp->next;
+		ft_putstr_fd(env->variable, 1);
+		ft_putchar_fd('=', 1);
+		ft_putendl_fd(env->content, 1);
+		env = env->next;
 	}
-	return (tmp);
+	return (0);
 }

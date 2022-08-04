@@ -3,51 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 19:13:31 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/02 21:03:06 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:09:12 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-char	*ft_get_variable()
+char	*ft_get_variable(char *str)
 {
-	
+	char	*var;
+	int		len;
+
+	len = 0;
+	while (str[len] != '=')
+		len++;
+	var = ft_substr(str, 0, len);
+	return (var);
 }
 
-char	*ft_get_content()
+char	*ft_get_content(char *str)
 {
+	char	*content;
+	int		start;
+	int		end;
 	
+	start = 0;
+	while (str[start] != '=')
+		start++;
+	start++;
+	end = start;
+	while (str[end] != '\0')
+		end++;
+	content = ft_substr(str, start, end);
+	return (content);
 }
 
-void	ft_free_and_destroy(char *var, char *content, t_envlist *tmp)
-{
-	free(var);
-	free(content);
-	
-}
+// void	ft_free_and_destroy(t_envlist *tmp)
+// {
+// 	free(tmp->variable);
+// 	free(tmp->content);
+// 	free(tmp);
+// }
 
 int		ft_env_create(char **env, t_minishell *shell)
 {
-	int 		i;
+	int			i;
 	char		*var;
 	char		*content;
-	t_envlist	*tmp;
 
 	var = ft_get_variable(env[0]);
 	content = ft_get_content(env[0]);
 	shell->env = ft_env_new_node(var, content);
 	i = 1;
-	while (env[i])
+	while (env && env[i] && env[0])
 	{
+		ft_putendl_fd(env[i], 1);
 		var = ft_get_variable(env[i]);
 		content = ft_get_content(env[i]);
-		tmp = ft_env_new_node(var, content);
-		ft_env_add_back(&shell->env, tmp);
-		ft_free_and_destroy(var, content, tmp);
+		ft_env_add_back(&shell->env, ft_env_new_node(var, content));
 		i++;
 	}
-	return (0)
+	return (0);
 }
