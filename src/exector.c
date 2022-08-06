@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exector.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/04 18:56:51 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/05 14:43:02 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	ft_execute_cmd(t_minishell *shell, char **args)
 	/* Save the stdin and out into two fd.*/
 	int	tmpin;
 	int	tmpout;
-	tmpin = dup(0);
-	tmpout = dup(1);
+	tmpin = dup(STDIN_FILENO);
+	tmpout = dup(STDOUT_FILENO;
 	
 	/* check for input redirection */
 	int	fdin;
@@ -72,30 +72,52 @@ int	ft_execute_cmd(t_minishell *shell, char **args)
 	while(i < numofcmds)
 	{
 		// redirecting input
-		dup2(fdin, 0);
+		dup2(fdin, STDIN_FILENO);
 		close(fdin);
-	}
-	if (i == numofcmds - 1)
-	{
-		// last command	
-		if (outfile)
-			fdout = open(outfile, );
-	}
-	else
-	{
-		fdout = dup(tmpout);
-	}
 	
-	if (is_builtin_cmd(args[0]))
-		exe_builtin(shell, args);
-	else
-	{
+		if (i == numofcmds - 1)
+		{
+			// last command	
+			if (outfile)
+				fdout = open(outfile, );
+			else
+			{
+				//Use default optput
+				fdout = dup(tmpout);
+			}
+		}
+		else
+		{
+			/*
+			**	not the last command 
+			**	create pipes
+			*/
+			int fdpipe[2];
+			pipe(fdpipe);
+			fdout = fdpipe[1];
+			fdin = fdpipe[0];
+		}
+		dup2(fdout, STDOUT_FILENO);
+		close(fdout);
+		
+		if (is_builtin_cmd(args[0]))
+			exe_builtin(shell, args);
+			
 		id = fork();
 		if (id == 0)
 			exe_lib(shell);
-		else
+		// else
+		// {
+		// }
+		dup2(tmpin, 0);
+		dup2(tmpout, 1);
+		close(tmpin);
+		close(tmpout);
+		
+		if (!background)		
 			waitpid(id, NULL, 0);
 	}
+	
 	return (0);
 }
 
