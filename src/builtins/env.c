@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 11:43:39 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/31 21:42:52 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/07 06:56:15 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_env(t_list *env)
 	print_lst(env);
 	return (0);
 }
+
+
 
 // int main(int ac, char **av, char **env)
 // {

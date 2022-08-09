@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exector.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/05 14:43:02 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/06 16:30:49 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_execute_cmd(t_minishell *shell, char **args)
 	int	tmpin;
 	int	tmpout;
 	tmpin = dup(STDIN_FILENO);
-	tmpout = dup(STDOUT_FILENO;
+	tmpout = dup(STDOUT_FILENO);
 	
 	/* check for input redirection */
 	int	fdin;

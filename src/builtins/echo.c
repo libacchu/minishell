@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:22:25 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/30 21:41:54 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/06 18:02:42 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,3 @@ int	ft_print_arr(int ac, char **arr, int i)
 	}
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	ft_echo(ac, &av[0]);
-// 	return (0);
-// }
