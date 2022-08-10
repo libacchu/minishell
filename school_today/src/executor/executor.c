@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/09 17:51:55 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:28:55 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void print_arr(char **arr)
 
 	i = -1;
 	while (arr[++i])
-		ft_printf("%s ", arr[i]);
+		ft_printf("%s \n", arr[i]);
 }
 
 /* duplicates the Standard in/output to restore after execution */
@@ -47,25 +47,27 @@ int	exe_cmd(t_minishell *shell)
 	id = fork();
 	if (id == 0)
 		exe_lib(shell);
+	else
+		waitpid(id, NULL, 0);
 	return (0);
 }
 
 /* calls all the necessary functions for execution */
 int	execution_handler(t_minishell *shell)
 {
-	shell->executor->nbr_of_cmds = nbr_of_cmds(shell->tokenlist);
-	ft_printf("-----HERE-----\n");
+	shell->executor = ft_calloc(sizeof(t_executor), 1);
+	shell->amt_cmds = nbr_of_cmds(shell->tokenlist);
 	convert_to_argv(shell);
-	// dup_std_in_out(shell->executor);
-	// input_redirect(shell->executor);
-	// if (is_builtin_cmd(shell->executor->args[0]))
-	// {
-	// 	exe_builtin(shell, shell->executor->args);
-	// }
-	// else
-	// {
-	// 	exe_cmd(shell);
-	// }
+	dup_std_in_out(shell->executor);
+	input_redirect(shell->executor);
+	if (is_builtin_cmd(shell->executor->argv->content))
+	{
+		exe_builtin(shell, shell->executor->argv->content);
+	}
+	else
+	{
+		exe_cmd(shell);
+	}
 	return (0);
 }
 

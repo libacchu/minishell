@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/09 17:30:56 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:28:01 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,14 @@
 # define CAT_REDIR_RR			9
 
 typedef struct s_executor {
-	int		nbr_of_cmds;
 	char	*cmd_path;
 	char	**args;
 	char	**env;
-	char	***argv;
+	t_list	*argv;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
 	int		fdout;
-	int		nbr_of_pipes;
 	char	*infile;
 	char	*outfile;
 	int		fdpipe[2];
@@ -74,6 +72,7 @@ typedef struct s_minishell {
 	t_envlist				*envlist;
 	t_executor				*executor;
 	int						pipe_counter;
+	int						amt_cmds;
 	char					*exit_status;
 }	t_minishell;
 
@@ -156,5 +155,8 @@ void			print_arr(char **arr);
 /* Executor commands */
 int				execution_handler(t_minishell *shell);
 int				exe_lib(t_minishell *shell);
+
+/* Free */
+void			ft_free_substring(char **substring);
 
 #endif

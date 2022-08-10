@@ -6,7 +6,7 @@
 #    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/09 17:27:53 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/10 12:22:50 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ RL_MAC = -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew
 
 $(NAME): $(OBJS)
 	make -C ./libft
+	make bonus -C ./libft
 	make -C ./libft/ft_printf
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(FT_PRINTF) $(RL_MAC) -o $(NAME)
 

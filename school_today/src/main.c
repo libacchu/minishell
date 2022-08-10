@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/08 08:45:05 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:13:44 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		parse(command_buf, &minishell);
 		execution_handler(&minishell);
+		
 	}
 	return (0);
 }

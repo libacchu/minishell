@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   isbuiltin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 21:54:09 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/08 09:15:29 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:23:37 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,12 @@ int	is_builtin_cmd(char *cmd)
 	// 	return (TRUE);
 	// if (!ft_strcmp(cmd, "cd"))
 	// 	return (TRUE);
-	ft_printf("1\n");
 	if (!ft_strcmp(cmd, "pwd"))
 		return (TRUE);
-	ft_printf("2\n");
 	if (!ft_strcmp(cmd, "export"))
 		return (TRUE);
-	ft_printf("3\n");
 	if (!ft_strcmp(cmd, "env"))
 		return (TRUE);
-	ft_printf("4\n");
 	// if (!ft_strcmp(cmd, "unset"))
 	// 	return (TRUE);
 	// if (!ft_strcmp(cmd, "exit"))

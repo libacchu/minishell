@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_library.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 22:51:02 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/08 09:22:16 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:31:02 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,12 @@ int	exe_lib(t_minishell *shell)
 	char	*cmd;
 	
 	shell->executor->env = ft_env_to_array(shell->envlist);
+	// print_arr(shell->executor->env);
 	cmd_paths = get_dir_path(shell->envlist);
-	cmd = search_dir_path(cmd_paths, shell->executor->args);
-	execve(cmd, shell->executor->args, shell->executor->env);
+	
+	cmd = search_dir_path(cmd_paths, shell->executor->argv->content);
+	// ft_printf("cmd = %s, content = %p, env = %s\n", cmd, (shell->executor->argv->content), shell->executor->env[0]);
+	// execve(cmd, shell->executor->argv->content, shell->executor->env);
+	execve(cmd, shell->executor->argv->content, shell->executor->env);
 	return (0);
 }
