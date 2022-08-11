@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/10 12:28:01 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/11 10:50:49 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 
 typedef struct s_executor {
 	char	*cmd_path;
-	char	**args;
 	char	**env;
 	t_list	*argv;
 	int		tmpin;
@@ -158,5 +157,8 @@ int				exe_lib(t_minishell *shell);
 
 /* Free */
 void			ft_free_substring(char **substring);
+void			ft_free_executor(t_executor *exec);
+void			ft_free_lexlist(t_lexlist *lex);
+void			ft_libft_del(void *del);
 
 #endif

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_free_lexlist.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mluik <mluik@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 11:52:14 by mluik             #+#    #+#             */
-/*   Updated: 2022/07/22 10:08:43 by mluik            ###   ########.fr       */
+/*   Created: 2022/08/11 10:41:10 by libacchu          #+#    #+#             */
+/*   Updated: 2022/08/11 10:53:41 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_free_substring(char **substring)
+void	ft_free_lexlist(t_lexlist *lex)
 {
-	int	i;
-
-	i = 0;
-	while (substring[i])
+	t_lexlist *tmp;
+	
+	while (lex)
 	{
-		free(substring[i]);
-		substring[i] = NULL;
-		i++;
+		tmp = lex->next;
+		// free(lex->token);
+		free(lex);
+		lex = tmp;
 	}
-	free(substring);
-	substring = NULL;
 }

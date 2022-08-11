@@ -6,7 +6,7 @@
 #    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/10 12:22:50 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/11 10:52:26 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC_DIR = ./src
 SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parser/add_data.c \
 		$(SRC_DIR)/errors/errors01.c \
-		$(SRC_DIR)/ft_free.c \
+		$(SRC_DIR)/ft_free_executor.c \
+		$(SRC_DIR)/ft_free_lexlist.c \
 		$(SRC_DIR)/parser/ft_initialscan.c \
 		$(SRC_DIR)/parser/parser.c \
 		$(SRC_DIR)/parser/parser_scan.c \

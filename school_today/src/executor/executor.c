@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/10 16:28:55 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/11 12:06:53 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int dup_std_in_out(t_executor *executor)
 	return (0);
 }
 
-/* */
-int	input_redirect(t_executor *executor)
+/* check for input redirection */
+int	check_input_redirect(t_executor *executor)
 {
 	if (executor->infile)
 		executor->fdin = open(executor->infile, O_RDONLY);
@@ -46,9 +46,31 @@ int	exe_cmd(t_minishell *shell)
 
 	id = fork();
 	if (id == 0)
+	{
 		exe_lib(shell);
+	}
 	else
 		waitpid(id, NULL, 0);
+	return (0);
+}
+
+int	redirect_output(t_executor *exec)
+{
+	if (exec->argv->next == NULL)
+	{
+		if (exec->outfile)
+			exec->fdout = open(exec->outfile, O_WRONLY);
+		else
+			exec->fdout = dup(exec->tmpout);
+	}
+	else
+	{
+		pipe(exec->fdpipe);
+		exec->fdout = exec->fdpipe[1];
+		exec->fdin = exec->fdpipe[0];
+	}
+	dup2(exec->fdout, STDOUT_FILENO);
+	close(exec->fdout);
 	return (0);
 }
 
@@ -59,39 +81,27 @@ int	execution_handler(t_minishell *shell)
 	shell->amt_cmds = nbr_of_cmds(shell->tokenlist);
 	convert_to_argv(shell);
 	dup_std_in_out(shell->executor);
-	input_redirect(shell->executor);
-	if (is_builtin_cmd(shell->executor->argv->content))
+	check_input_redirect(shell->executor);
+	t_list *tmp = shell->executor->argv;
+	while (shell->executor->argv)
 	{
-		exe_builtin(shell, shell->executor->argv->content);
+		redirect_output(shell->executor);
+		if (is_builtin_cmd(shell->executor->argv->content))
+		{
+			exe_builtin(shell, shell->executor->argv->content);
+		}
+		else
+		{
+			exe_cmd(shell);
+		}
+		dup2(shell->executor->tmpin, STDIN_FILENO);
+		dup2(shell->executor->tmpout, STDOUT_FILENO);
+		close(shell->executor->tmpin);
+		close(shell->executor->tmpout);
+		shell->executor->argv = shell->executor->argv->next;
 	}
-	else
-	{
-		exe_cmd(shell);
-	}
+	shell->executor->argv = tmp;
+	ft_free_executor(shell->executor);
+	shell->tokenlist = NULL;
 	return (0);
 }
-
-	// int len;
-	
-	// print_arr(shell->executor->args);
-	// len = lex_length(shell->tokenlist);
-	// ft_printf("number of command = %d\n", len);
-
-// int	main(int ac, char **av)
-// {
-// 	char	*cmd;
-// 	char	**option;
-// 	char	**env;
-
-// 	(void)ac;
-// 	cmd = av[1];
-// 	option = av;
-// 	env = NULL;
-// 	exector(cmd, option, env);
-// 	return (0);
-// }
-
-	// if (ft_strcmp(cmd, "echo"))
-	// 	use_builtins(cmd, argv, env);
-	// if (execve(cmd, &argv[2], env) == -1)
-	// 	perror("Command not executed\n");
