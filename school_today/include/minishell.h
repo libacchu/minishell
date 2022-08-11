@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/11 10:50:49 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:16:48 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void			print_arr(char **arr);
 /* Executor commands */
 int				execution_handler(t_minishell *shell);
 int				exe_lib(t_minishell *shell);
+int				redirect_output(t_executor *exec);
 
 /* Free */
 void			ft_free_substring(char **substring);

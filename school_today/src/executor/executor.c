@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/11 12:06:53 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:21:39 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,31 @@ int	check_input_redirect(t_executor *executor)
 	return (0);
 }
 
+int	redirect_output(t_executor *exec)
+{
+	// int fdpipe[2];
+	if (exec->argv->next == NULL)
+	{
+		ft_printf("last\n");
+		// if (exec->outfile)
+		// 	exec->fdout = open(exec->outfile, O_WRONLY);
+		// else
+		dup2(exec->fdout, exec->tmpout);
+		// exec->fdout = dup(exec->tmpout);
+	}
+	else
+	{
+		ft_printf("pipe\n");
+		if (pipe(exec->fdpipe) == -1)
+			ft_printf("error with pipe\n");
+		exec->fdout = exec->fdpipe[1];
+		exec->fdin = exec->fdpipe[0];
+		dup2(exec->fdout, STDOUT_FILENO);
+	}
+	close(exec->fdout);
+	return (0);
+}
+
 int	exe_cmd(t_minishell *shell)
 {
 	int	id;
@@ -54,35 +79,17 @@ int	exe_cmd(t_minishell *shell)
 	return (0);
 }
 
-int	redirect_output(t_executor *exec)
-{
-	if (exec->argv->next == NULL)
-	{
-		if (exec->outfile)
-			exec->fdout = open(exec->outfile, O_WRONLY);
-		else
-			exec->fdout = dup(exec->tmpout);
-	}
-	else
-	{
-		pipe(exec->fdpipe);
-		exec->fdout = exec->fdpipe[1];
-		exec->fdin = exec->fdpipe[0];
-	}
-	dup2(exec->fdout, STDOUT_FILENO);
-	close(exec->fdout);
-	return (0);
-}
-
 /* calls all the necessary functions for execution */
 int	execution_handler(t_minishell *shell)
 {
+	t_list *tmp;
+	
 	shell->executor = ft_calloc(sizeof(t_executor), 1);
 	shell->amt_cmds = nbr_of_cmds(shell->tokenlist);
 	convert_to_argv(shell);
 	dup_std_in_out(shell->executor);
 	check_input_redirect(shell->executor);
-	t_list *tmp = shell->executor->argv;
+	tmp = shell->executor->argv;
 	while (shell->executor->argv)
 	{
 		redirect_output(shell->executor);
@@ -94,12 +101,13 @@ int	execution_handler(t_minishell *shell)
 		{
 			exe_cmd(shell);
 		}
-		dup2(shell->executor->tmpin, STDIN_FILENO);
-		dup2(shell->executor->tmpout, STDOUT_FILENO);
-		close(shell->executor->tmpin);
-		close(shell->executor->tmpout);
 		shell->executor->argv = shell->executor->argv->next;
+		dup2(shell->executor->tmpin, STDIN_FILENO);
+		close(shell->executor->tmpin);
+		dup2(shell->executor->tmpout, STDOUT_FILENO);
+		close(shell->executor->tmpout);
 	}
+	
 	shell->executor->argv = tmp;
 	ft_free_executor(shell->executor);
 	shell->tokenlist = NULL;
