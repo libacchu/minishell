@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/10 16:13:44 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/16 14:18:11 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_printenvlist_checker(t_minishell *minishell)
 
 void ft_print_into(void)
 {
+	ft_putstr_fd("\033[0;32m", 1);
 	ft_printf("\n");
 	ft_printf("/* ********************************************************************* */\n");
 	ft_printf("/*                                                                       */\n");
@@ -44,6 +45,7 @@ void ft_print_into(void)
 	ft_printf("/*                                                                       */\n");
 	ft_printf("/* ********************************************************************* */\n");
 	ft_printf("\n");
+
 }
 
 
@@ -62,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 	ft_env_create(env, &minishell);
 	while (1)
 	{
-		command_buf = readline("minishell> ");
+		command_buf = readline("\033[0;34mminishell > \033[0m");
 		if (strlen(command_buf) > 0)
 			add_history(command_buf);
 		if (!strcmp(command_buf, "exit"))

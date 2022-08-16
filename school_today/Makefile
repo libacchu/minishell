@@ -6,7 +6,7 @@
 #    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/11 10:52:26 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/16 14:27:50 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/builtins/echo.c \
 		$(SRC_DIR)/builtins/export.c \
 		$(SRC_DIR)/builtins/pwd.c \
+		$(SRC_DIR)/builtins/cd.c \
 		$(SRC_DIR)/executor/executor.c \
 		$(SRC_DIR)/executor/exe_library.c \
 		$(SRC_DIR)/executor/api.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/13 15:27:12 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:57:08 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,12 @@ int				parse(char *command_buf, t_minishell *minishell);
 t_minishell		initialize_minishell_struct(void);
 
 /* Builtin commands */
-int				is_builtin_cmd(char *cmd);
+int				is_builtin_cmd(char **cmd);
 int				exe_builtin(t_minishell *shell, char **args);
 int				ft_echo(int ac, char **av);
 int				ft_export(t_envlist *env, char **cmd_arr);
 int				ft_pwd(void);
+int				ft_cd(char *new_dir, t_minishell *shell);
 
 /* env commands */
 int				ft_env_print(t_envlist *env);
@@ -141,7 +142,7 @@ t_envlist		*ft_env_new_node(char *variable, char *content);
 char			**ft_env_to_array(t_envlist *env);
 int				ft_env_len(t_envlist *env_struct);
 void			ft_env_add_back(t_envlist **env, t_envlist *new);
-t_envlist		*ft_env_last(t_envlist **env);
+t_envlist		*ft_env_last(t_envlist *env);
 
 /* void		ft_free_substring(char **substring);  */
 void			exit_w_error(char *message);
