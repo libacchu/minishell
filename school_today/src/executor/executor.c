@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/16 10:29:05 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/17 21:51:34 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ int dup_std_in_out(t_executor *executor)
 	executor->tmpin = dup(STDIN_FILENO);
 	executor->tmpout = dup(STDOUT_FILENO);
 
-	executor->fdin = dup(executor->tmpin);
+
 	return (0);
 }
 
 /* check for input redirection */
 int	check_input_redirect(t_executor *executor)
 {
+	if (executor->infile)
+		executor->fdin = open(executor->infile, O_RDONLY);
+	else
+		executor->fdin = dup(executor->tmpin);
 	// if (executor->infile)
 	// 	executor->fdin = open(executor->infile, O_RDONLY);
 	// else
-	executor->fdin = dup(executor->tmpin);
+	// executor->fdin = dup(executor->tmpin);
 	close(executor->fdin);
 	return (0);
 }
@@ -48,12 +52,15 @@ int	redirect_output(t_executor *exec)
 	// int fdpipe[2];
 	if (exec->argv->next == NULL)
 	{
-		// ft_printf("last\n");
-		// if (exec->outfile)
-		// 	exec->fdout = open(exec->outfile, O_WRONLY);
-		// else
-		// dup2(exec->fdout, exec->tmpout);
-		exec->fdout = dup(exec->tmpout);
+		// ft_printf("outfile = %s\n", exec->outfile);
+		if (exec->outfile)
+		{
+			exec->fdout = open(exec->outfile, O_TRUNC | O_RDWR);
+			if (exec->fdout == -1)
+				exec->fdout = open(exec->outfile, O_TRUNC | O_CREAT);
+		}
+		else
+			dup2(exec->fdout, exec->tmpout);
 	}
 	else
 	{
@@ -80,37 +87,45 @@ int	exe_cmd(t_minishell *shell)
 /* calls all the necessary functions for execution */
 int	execution_handler(t_minishell *shell)
 {
-	t_list *tmp;
+	// t_list *tmp;
 	
 	shell->executor = ft_calloc(sizeof(t_executor), 1);
 	shell->amt_cmds = nbr_of_cmds(shell->tokenlist);
 	convert_to_argv(shell);
+	check_redirect_file(shell);
 	dup_std_in_out(shell->executor);
-	tmp = shell->executor->argv;
+	check_input_redirect(shell->executor);
+	// tmp = shell->executor->argv;
 	while (shell->executor->argv)
 	{
-		check_input_redirect(shell->executor);
+		dup2(shell->executor->fdin, 0);
+		close(shell->executor->fdin);
 		redirect_output(shell->executor);
+			
 		if (is_builtin_cmd(shell->executor->argv->content))
 		{
 			exe_builtin(shell, shell->executor->argv->content);
 		}
 		else
 		{
+			
 			exe_cmd(shell);
 		}
 		dup2(shell->executor->tmpin, STDIN_FILENO);
 		dup2(shell->executor->tmpout, STDOUT_FILENO);
 		close(shell->executor->tmpin);
 		close(shell->executor->tmpout);
-
-		if (shell->executor->id != 0)
-			waitpid(shell->executor->id, NULL, 0);
-		shell->executor->argv = shell->executor->argv->next;
+		if (shell->executor->argv)
+			shell->executor->argv = shell->executor->argv->next;
 	}
-	
-	shell->executor->argv = tmp;
-	ft_free_executor(shell->executor);
-	shell->tokenlist = NULL;
+	if (shell->executor->id != 0)
+	{
+		waitpid(shell->executor->id, NULL, 0);
+		// shell->executor->argv = tmp;
+		ft_free_executor(shell->executor);
+		// free(shell->executor);
+		shell->tokenlist = NULL;
+		shell->redir_list = NULL;
+	}
 	return (0);
 }

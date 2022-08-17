@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/16 13:57:08 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/17 20:50:28 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_minishell {
 	t_lexlist				*redir_list;
 	t_envlist				*envlist;
 	t_executor				*executor;
+	char					*line;
 	int						pipe_counter;
 	int						amt_cmds;
 	char					*exit_status;
@@ -151,6 +152,7 @@ void			exit_w_error(char *message);
 int				lex_length(t_lexlist *tokenlist);
 int				convert_to_argv(t_minishell *shell);
 int				nbr_of_cmds(t_lexlist *tokenlist);
+int				check_redirect_file(t_minishell *shell);
 void			print_arr(char **arr);
 
 /* Executor commands */

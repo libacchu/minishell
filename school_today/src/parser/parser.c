@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 12:15:19 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/10 15:46:30 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/17 21:28:00 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

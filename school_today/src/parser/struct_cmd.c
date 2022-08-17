@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mluik <mluik@student.42wolfsburg.de>       +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 23:49:43 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/05 16:56:33 by mluik            ###   ########.fr       */
+/*   Updated: 2022/08/17 21:14:29 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,8 @@ t_minishell	initialize_minishell_struct(void)
 	minishell.envlist = NULL;
 	minishell.pipe_counter = 0;
 	minishell.exit_status = NULL;
+	
+	minishell.executor = NULL;
+	minishell.line = NULL;
 	return (minishell);
 }

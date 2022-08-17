@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   api.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 08:22:02 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/10 16:00:00 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/17 21:33:37 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		lex_length(t_lexlist *tokenlist)
 		if(tmp->token == NULL)
 			tmp = tmp->next;
 		count++;
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 	}
 	return (count);
 }
@@ -58,9 +59,10 @@ int nbr_of_cmd_args(t_lexlist *tokenlist)
 	{
 		if (tmp->token == NULL)
 			tmp = tmp->next;
-		if (tmp->token_category == CAT_PIP)
+		if (tmp && tmp->token_category == CAT_PIP)
 			break ;
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 		count++;
 	}
 	return (count);
@@ -90,21 +92,28 @@ int	convert_to_argv(t_minishell *shell)
 	loop = shell->tokenlist;
 	while (loop)
 	{
-		i = -1;
+		i = 0;
 		argc = nbr_of_cmd_args(loop);
 		// ft_printf("argc = %d\n", argc);
 		cmd = ft_calloc(sizeof(char *), argc + 1);
-		while (++i < argc)
+		while (i < argc && loop)
 		{
 			while ((loop->token_category == CAT_PIP) || (loop->token_category == CAT_SPAC))
-				loop = loop->next;
-			cmd[i] = ft_strdup(loop->token);
+			{
+				if (loop->next)
+					loop = loop->next;
+				else
+					break ;
+			}
+			if (loop && loop->token)
+				cmd[i] = ft_strdup(loop->token);
 			// ft_printf("loop->token = %s\n", loop->token);
 			// ft_printf("cmd[%d] = %s\n", i, cmd[i]);
-			loop = loop->next;
+			if (loop)
+				loop = loop->next;
+			i++;
 		}
 		tmp = cmd;
-		
 		if (!shell->executor->argv)
 			shell->executor->argv = ft_lstnew(tmp);
 		else
@@ -113,10 +122,27 @@ int	convert_to_argv(t_minishell *shell)
 		if (loop)
 			loop = loop->next;
 	}
-		// ft_printf("----HERE----\n");
 	return (0);
 }
 
+int	check_redirect_file(t_minishell *shell)
+{
+	t_lexlist	*tmp;
+
+	tmp = NULL;
+	if (shell->redir_list)
+		tmp = shell->redir_list;
+	while (tmp)
+	{
+		if (tmp->token_category == CAT_REDIR_L)
+			shell->executor->infile = ft_strdup(tmp->token);
+		if (tmp->token_category == CAT_REDIR_R)
+			shell->executor->outfile = ft_strdup(tmp->token);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+	
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/16 14:18:11 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/17 21:22:18 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		command_buf = readline("\033[0;34mminishell > \033[0m");
-		if (strlen(command_buf) > 0)
+		if (ft_strlen(command_buf) > 0)
 			add_history(command_buf);
 		if (!strcmp(command_buf, "exit"))
 			break ;
 		parse(command_buf, &minishell);
 		execution_handler(&minishell);
-		
+		free(command_buf);
+		command_buf = NULL;
 	}
 	return (0);
 }
