@@ -6,11 +6,11 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:43:01 by libacchu          #+#    #+#             */
-/*   Updated: 2022/07/22 10:57:38 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/19 14:54:12 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 ** ft_exit()
@@ -20,10 +20,11 @@
 **		int exnum = exit number.
 */
 
-void	ft_exit(char *mess, t_minishell *minishell, int fd, int exnum)
+void	ft_exit(char *mess, t_minishell *minishell)
 {
 	if (mess)
-		ft_putstr_fd(mess, fd);
-	ft_free_mini(minishell);
-	exit(exnum);
+		ft_putstr_fd(mess, 1);
+	(void) minishell;
+	// ft_free_mini(minishell);
+	exit(1);
 }

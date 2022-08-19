@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 08:22:02 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/17 21:33:37 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/19 23:56:29 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	nbr_of_cmds(t_lexlist *tokenlist)
 	return (count);
 }
 
+/*	nbr_of_cmd_args() looks between pipes and
+		count the number of arguments.
+*/
 int nbr_of_cmd_args(t_lexlist *tokenlist)
 {
 	t_lexlist	*tmp;
@@ -68,6 +71,7 @@ int nbr_of_cmd_args(t_lexlist *tokenlist)
 	return (count);
 }
 
+/*	For testing purposes */
 int print_t_list(t_list *list)
 {
 	t_list *tmp;
@@ -81,44 +85,56 @@ int print_t_list(t_list *list)
 	return (0);
 }
 
+/*	Skips all the pipes and spaces while iterating
+		through a lexlist struct.
+*/
+t_lexlist	*skip_pipes_space(t_lexlist *loop)
+{
+	while ((loop->token_category == CAT_PIP) || (loop->token_category == CAT_SPAC))
+	{
+		if (loop->next)
+			loop = loop->next;
+		else
+			break ;
+	}
+	return (loop);
+}
+
+char **make_arg(int argc, t_lexlist	**loop)
+{
+	int i;
+	char **cmd;
+	
+	i = 0;
+	cmd = ft_calloc(sizeof(char *), argc + 1);
+	while (i < argc && (*loop))
+	{
+		(*loop) = skip_pipes_space((*loop));
+		if ((*loop) && (*loop)->token)
+		{
+			cmd[i] = ft_strdup((*loop)->token);
+			// ft_printf("cmd[%d] = %s\n", i, cmd[i]);
+		}
+		if ((*loop))
+			(*loop) = (*loop)->next;
+		i++;
+	}
+	// print_arr(cmd);
+	return (cmd);
+}
+
 int	convert_to_argv(t_minishell *shell)
 {
 	t_lexlist	*loop;
 	int			argc;
-	int			i;
 	char		**cmd;
-	char		**tmp;
 
 	loop = shell->tokenlist;
 	while (loop)
 	{
-		i = 0;
 		argc = nbr_of_cmd_args(loop);
-		// ft_printf("argc = %d\n", argc);
-		cmd = ft_calloc(sizeof(char *), argc + 1);
-		while (i < argc && loop)
-		{
-			while ((loop->token_category == CAT_PIP) || (loop->token_category == CAT_SPAC))
-			{
-				if (loop->next)
-					loop = loop->next;
-				else
-					break ;
-			}
-			if (loop && loop->token)
-				cmd[i] = ft_strdup(loop->token);
-			// ft_printf("loop->token = %s\n", loop->token);
-			// ft_printf("cmd[%d] = %s\n", i, cmd[i]);
-			if (loop)
-				loop = loop->next;
-			i++;
-		}
-		tmp = cmd;
-		if (!shell->executor->argv)
-			shell->executor->argv = ft_lstnew(tmp);
-		else
-			ft_lstadd_back(&shell->executor->argv, ft_lstnew(tmp));
-		// ft_free_substring(cmd);
+		cmd = make_arg(argc, &loop);
+		ft_lstadd_back(&shell->executor->argv, ft_lstnew(cmd));
 		if (loop)
 			loop = loop->next;
 	}
@@ -142,52 +158,3 @@ int	check_redirect_file(t_minishell *shell)
 	}
 	return (0);
 }
-	
-
-
-
-// int	convert_to_argv(t_minishell *shell)
-// {
-// 	int			len;
-// 	t_lexlist	*tmp;
-// 	int			i;
-// 	int			j;
-// 	int			argc;
-	
-// 	i = 0;
-// 	tmp = shell->tokenlist;
-// 	len = lex_length(shell->tokenlist);
-// 	shell->executor->argv = ft_calloc(sizeof(char **), (len + 1));
-// 	while (tmp && i < shell->executor->nbr_of_cmds)
-// 	{
-// 		j = 0;
-// 		argc = nbr_of_cmd_args(tmp);
-// 		shell->executor->argv[i] = ft_calloc(sizeof(char *), (argc + 1));
-// 		while (j < argc)
-// 		{
-// 			if (tmp->token == NULL)
-// 				tmp = tmp->next;
-// 			if (tmp->token_category == CAT_PIP)
-// 			{
-// 				tmp = tmp->next;
-// 				break ;
-// 			}
-// 			shell->executor->argv[i][j] = ft_strdup(tmp->token);
-// 			// ft_printf("-----HERE-----\n");
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < shell->executor->nbr_of_cmds)
-// 	{
-// 		print_arr(shell->executor->argv[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// int	make_cmds_list(t_minishell *shell)
-// {
-	
-// }

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_last.c                                      :+:      :+:    :+:   */
+/*   ft_free_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/02 18:56:31 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/19 14:16:27 by libacchu         ###   ########.fr       */
+/*   Created: 2022/08/19 14:39:45 by libacchu          #+#    #+#             */
+/*   Updated: 2022/08/19 14:46:28 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
-t_envlist	*ft_env_last(t_envlist *env)
-{
-	t_envlist *tmp;
-	
-	tmp = env;
-	while (tmp)
-	{
-		if (!tmp->next)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
+// int	ft_free_minishell(t_minishell *shell)
+// {
+// 	if (shell->tokenlist)
+// 		free()
+// }

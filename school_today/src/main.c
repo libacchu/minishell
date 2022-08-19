@@ -6,48 +6,13 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/17 21:22:18 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/20 00:37:24 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/* 	A checker for the env list: prints out env values as table.
-	ft_printenvlist_checker(&minishell);
-void	ft_printenvlist_checker(t_minishell *minishell)
-{
-	t_envlist	*nodeprint;
-
-	nodeprint = minishell->envlist;
-	while (nodeprint)
-	{
-		ft_printf("var:\t %s \t \t content:\t %s \n",
-			nodeprint->variable,
-			nodeprint->content);
-		nodeprint = nodeprint->next;
-	}
-	minishell->envlist = NULL;
-} */
-
-void ft_print_into(void)
-{
-	ft_putstr_fd("\033[0;32m", 1);
-	ft_printf("\n");
-	ft_printf("/* ********************************************************************* */\n");
-	ft_printf("/*                                                                       */\n");
-	ft_printf("/*                                                   :::      ::::::::   */\n");
-	ft_printf("/*      MINISHELL                                  :+:      :+:    :+:   */\n");
-	ft_printf("/*                                               +:+ +:+         +:+     */\n");
-	ft_printf("/*          CREATED BY:                        +#+  +:+       +#+        */\n");
-	ft_printf("/*                     mluik                 +#+#+#+#+#+   +#+           */\n");
-	ft_printf("/*                          &                     #+#    #+#             */\n");
-	ft_printf("/*                           libacchu            ###   ########.fr       */\n");
-	ft_printf("/*                                                                       */\n");
-	ft_printf("/* ********************************************************************* */\n");
-	ft_printf("\n");
-
-}
-
+void ft_print_into(void);
 
 /* Main function for the minishell.
 	Starting point for prompt, lexing, parsing, 
@@ -65,14 +30,36 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		command_buf = readline("\033[0;34mminishell > \033[0m");
+		ft_printf("--- HERE ---\n");
 		if (ft_strlen(command_buf) > 0)
+		{
 			add_history(command_buf);
+		}
+		ft_printf("--- THERE ---\n");
 		if (!strcmp(command_buf, "exit"))
-			break ;
+			ft_exit(NULL, &minishell) ;
 		parse(command_buf, &minishell);
 		execution_handler(&minishell);
 		free(command_buf);
 		command_buf = NULL;
 	}
 	return (0);
+}
+
+void ft_print_into(void)
+{
+	ft_putstr_fd("\033[0;32m", 1);
+	ft_printf("\n");
+	ft_printf("/* ********************************************************************* */\n");
+	ft_printf("/*                                                                       */\n");
+	ft_printf("/*                                                   :::      ::::::::   */\n");
+	ft_printf("/*      MINISHELL                                  :+:      :+:    :+:   */\n");
+	ft_printf("/*                                               +:+ +:+         +:+     */\n");
+	ft_printf("/*          CREATED BY:                        +#+  +:+       +#+        */\n");
+	ft_printf("/*                     mluik                 +#+#+#+#+#+   +#+           */\n");
+	ft_printf("/*                          &                     #+#    #+#             */\n");
+	ft_printf("/*                           libacchu            ###   ########.fr       */\n");
+	ft_printf("/*                                                                       */\n");
+	ft_printf("/* ********************************************************************* */\n");
+	ft_printf("\n");
 }

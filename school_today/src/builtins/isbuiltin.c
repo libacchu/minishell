@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 21:54:09 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/17 21:52:58 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/19 20:20:27 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	is_builtin_cmd(char **cmd)
 	// ft_printf("----- cmd = %s ----\n", cmd[0]);
 	if (!cmd[0])
 		return (2);
-	ft_printf("---- 1 ----\n");
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (TRUE);
 	if (!ft_strcmp(cmd[0], "cd"))

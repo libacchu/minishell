@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/17 20:50:28 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/20 00:08:18 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,8 @@ void			ft_free_substring(char **substring);
 void			ft_free_executor(t_executor *exec);
 void			ft_free_lexlist(t_lexlist *lex);
 void			ft_libft_del(void *del);
+
+/* Exit */
+void			ft_exit(char *mess, t_minishell *minishell);
 
 #endif

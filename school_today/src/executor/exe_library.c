@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_library.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 22:51:02 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/11 15:06:00 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/19 20:11:08 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int	exe_lib(t_minishell *shell)
 	cmd_paths = get_dir_path(shell->envlist);
 	cmd = search_dir_path(cmd_paths, shell->executor->argv->content);
 	execve(cmd, shell->executor->argv->content, shell->executor->env);
+	//print error message, if fail.
 	return (0);
 }

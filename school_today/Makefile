@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/16 14:27:50 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/19 23:24:44 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,18 +28,19 @@ SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parser/scanners02.c \
 		$(SRC_DIR)/parser/struct_cmd.c \
 		$(SRC_DIR)/builtins/env_test_m/ft_env_last.c \
+		$(SRC_DIR)/builtins/env_real/ft_env_last.c \
 		$(SRC_DIR)/builtins/env_test_m/ft_env_create.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_print.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_new_node.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_to_array.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_len.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_add_back.c \
-		$(SRC_DIR)/builtins/env_real/ft_env_last.c \
 		$(SRC_DIR)/builtins/isbuiltin.c \
 		$(SRC_DIR)/builtins/echo.c \
 		$(SRC_DIR)/builtins/export.c \
 		$(SRC_DIR)/builtins/pwd.c \
 		$(SRC_DIR)/builtins/cd.c \
+		$(SRC_DIR)/builtins/ft_exit.c \
 		$(SRC_DIR)/executor/executor.c \
 		$(SRC_DIR)/executor/exe_library.c \
 		$(SRC_DIR)/executor/api.c \
