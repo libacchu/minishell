@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/20 17:23:31 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/22 15:08:47 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,50 +26,54 @@
 # include "../libft/libft.h"
 # include "../libft/ft_printf/ft_printf.h"
 
+/* Categories for the tokens */
 # define CAT_DEFAULT			0
 # define CAT_DOUBLEQ			1
 # define CAT_SINGLEQ			2
 # define CAT_SPAC				3
 # define CAT_PIP				4
-# define CAT_REDIR_L			6
-# define CAT_REDIR_LL			7
-# define CAT_REDIR_R			8
-# define CAT_REDIR_RR			9
+# define CAT_REDIR_L			6 /* infile */
+# define CAT_REDIR_LL			7 /* heredoc */
+# define CAT_REDIR_R			8 /* outfile - rewrite file */
+# define CAT_REDIR_RR			9 /* outfile - append file */
 
-// typedef struct s_executor {
-// 	char	*cmd_path;
-// 	char	**env;
-// 	t_list	*argv;
-// 	int		tmpin;
-// 	int		tmpout;
-// 	int		fdin;
-// 	int		fdout;
-// 	char	*infile;
-// 	char	*outfile;
-// 	int		fdpipe[2];
-// 	int		id;
-// 	int		background;
-// }	t_executor;
+/*
+	OLD EXECUTOR STRUCT
+typedef struct s_executor {
+	char	*cmd_path;
+	char	**env;
+	t_list	*argv;
+	int		tmpin;
+	int		tmpout;
+	int		fdin;
+	int		fdout;
+	char	*infile;
+	char	*outfile;
+	int		fdpipe[2];
+	int		id;
+	int		background;
+}	t_executor;
+*/
 
 typedef struct s_executor {
-	t_process	*process;
+	t_command	*process;
 	char		**env;
 	int			tmpin;
 	int			tmpout;
 	int			**fdpipe;
-	int			pipe_count;
+	int			amt_of_cmds;
 	int			id;
 }	t_executor;
 
-typedef struct s_process {
-	char	*cmd_path;
+typedef struct s_command {
 	char	**cmd;
-	int		argc;
+	int		index;
+	char	*cmd_path;
 	int		fdin;
 	int		fdout;
 	char	**infile;
 	char	**outfile;
-}	t_process;
+}	t_command;
 
 typedef struct s_envlist {
 	char					*variable;
@@ -171,7 +175,7 @@ void			exit_w_error(char *message);
 /* API */
 int				lex_length(t_lexlist *tokenlist);
 int				convert_to_argv(t_minishell *shell);
-int				nbr_of_cmds(t_lexlist *tokenlist);
+int				ft_nbr_of_cmds(t_lexlist *tokenlist);
 int				check_redirect_file(t_minishell *shell);
 
 /* Executor commands */

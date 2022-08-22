@@ -5,103 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 09:41:49 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/20 15:14:23 by libacchu         ###   ########.fr       */
+/*   Created: 2022/08/21 21:55:54 by libacchu          #+#    #+#             */
+/*   Updated: 2022/08/22 14:50:32 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/* duplicates the Standard in/output to restore after execution */
-int dup_std_in_out(t_executor *executor)
+int one_command(t_minishell *shell);
+int	exe_cmd(t_minishell *shell);
+
+/* calls all the necessary functions for execution */
+int	execution_handler(t_minishell *shell)
 {
-	executor->tmpin = dup(STDIN_FILENO);
-	executor->tmpout = dup(STDOUT_FILENO);
-	return (0);
+	shell->executor = ft_calloc(sizeof(t_executor), 1);
+	ft_api_handler(shell, shell->executor);
+	if (shell->executor->amt_of_cmds == 1)
+		one_command(shell->executor);
+	else
+		multi_commands(shell->executor);
 }
 
-/* check for input redirection */
-int	check_input_redirect(t_executor *executor)
+int one_command(t_minishell *shell)
 {
-	if (executor->infile)
-		executor->fdin = open(executor->infile, O_RDONLY);
+	if (is_builtin_cmd(shell->executor->process[0].cmd))
+		exe_builtin(shell, shell->executor->process[0].cmd);
 	else
-		executor->fdin = dup(executor->tmpin);
-	return (0);
+		exe_cmd(shell);
 }
 
-int	redirect_output(t_executor *exec)
+int multi_commands()
 {
-	
-	if (exec->argv->next == NULL)
-	{
-		if (exec->outfile)
-		{
-			exec->fdout = open(exec->outfile, O_TRUNC | O_RDWR);
-			if (exec->fdout == -1)
-				exec->fdout = open(exec->outfile, O_TRUNC | O_CREAT);
-		}
-		else
-			dup2(exec->fdout, exec->tmpout);
-	}
-	else
-	{
-		pipe(exec->fdpipe);
-		exec->fdout = exec->fdpipe[1];
-		exec->fdin = exec->fdpipe[0];
-	}
-	return (0);
+	/*
+		- create pipes
+		- save_STDin and STDout
+		- check for redirections
+		- (^) if yes: open fd
+		- fork()
+		- check builtins or not
+	*/
+	ft_create_pipes(t_executor *exec);
 }
 
 int	exe_cmd(t_minishell *shell)
 {
 	shell->executor->id = fork();
 	if (shell->executor->id == 0)
-	{
 		exe_lib(shell);
-	}
 	return (0);
 }
 
-/* calls all the necessary functions for execution */
-int	execution_handler(t_minishell *shell)
+int	exe_lib(t_minishell *shell, t_executor *exec)
 {
-	shell->executor = ft_calloc(sizeof(t_executor), 1);
-	shell->amt_cmds = nbr_of_cmds(shell->tokenlist);
-	convert_to_argv(shell);
-	check_redirect_file(shell);
-	dup_std_in_out(shell->executor);
-	check_input_redirect(shell->executor);
-	while (shell->executor->argv)
-	{
-		dup2(shell->executor->fdin, STDIN_FILENO);
-		close(shell->executor->fdin);
-		redirect_output(shell->executor);
-		dup2(shell->executor->fdout, STDOUT_FILENO);
-		close(shell->executor->fdout);
-		if (is_builtin_cmd(shell->executor->argv->content))
-		{
-			exe_builtin(shell, shell->executor->argv->content);
-		}
-		else
-		{
-			exe_cmd(shell);
-		}
-		// close(shell->executor->fdin);
-		// close(shell->executor->fdout);
-		dup2(shell->executor->fdin, shell->executor->fdout);
-		close(shell->executor->fdin);
-		waitpid(shell->executor->id, NULL, 0);
-		if (shell->executor->argv)
-			shell->executor->argv = shell->executor->argv->next;
-	}
-	dup2(shell->executor->tmpin, STDIN_FILENO);
-	dup2(shell->executor->tmpout, STDOUT_FILENO);
-	close(shell->executor->tmpin);
-	close(shell->executor->tmpout);
-	ft_free_executor(shell->executor);
-	// free(shell->executor);
-	shell->tokenlist = NULL;
-	shell->redir_list = NULL;
+	char	*cmd_path;
+	
+	shell->executor->env = ft_env_to_array(shell->envlist);
+	cmd_path = get_cmd_path(shell->envlist, exec->process->cmd);
+	if (!cmd_path)
+		ft_printf("minishell: %s: No such file or directory\n", exec->process->cmd[0]);
+	execve(cmd_path, exec->process->cmd, shell->executor->env);
 	return (0);
 }
