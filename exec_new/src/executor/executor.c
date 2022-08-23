@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 21:55:54 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/22 14:50:32 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:13:17 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int one_command(t_minishell *shell)
 		exe_cmd(shell);
 }
 
-int multi_commands()
+int multi_commands(t_minishell *shell, t_executor *exec)
 {
 	/*
 		- create pipes
@@ -44,7 +44,10 @@ int multi_commands()
 		- fork()
 		- check builtins or not
 	*/
-	ft_create_pipes(t_executor *exec);
+	ft_pipes_handler(exec);
+	dup_std_in_out(exec);
+	ft_redirections();
+	
 }
 
 int	exe_cmd(t_minishell *shell)

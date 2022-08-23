@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:18:07 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/22 15:46:57 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:04:22 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-int	check_for_valid _redirect(const char *redirect, int category)
+int	check_for_valid_redirect(const char *redirect, int category)
 {
 	if (category == CAT_REDIR_L)
 	{
