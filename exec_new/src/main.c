@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:04:27 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/20 13:45:46 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:46:28 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 		if (!strcmp(command_buf, "exit"))
 			ft_exit(NULL, &minishell) ;
 		parse(command_buf, &minishell);
-		// execution_handler(&minishell);
+		execution_handler(&minishell);
 		// free(command_buf);
 		// command_buf = NULL;
 	}

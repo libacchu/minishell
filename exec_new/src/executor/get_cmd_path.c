@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 23:09:08 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/22 08:49:39 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 21:22:28 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*search_dir_path(char **cmd_paths, char **commands);
 **	RETURN: if successful, 	get_cmd_path() returns the path to the command's
 		directory, if not found it returns NULL. 
 */
-char	*get_cmd_path(t_envlist *env, t_command *cmd)
+char	*get_cmd_path(t_envlist *env, char **cmd)
 {
 	char	**paths;
 	char	*cmd_path;
@@ -29,7 +29,7 @@ char	*get_cmd_path(t_envlist *env, t_command *cmd)
 	paths = get_dir_path(env);
 	if (!paths)
 		return (NULL);
-	cmd_path = search_dir_path(paths, cmd->cmd);
+	cmd_path = search_dir_path(paths, cmd);
 	if (!cmd_path)
 		return (NULL);
 	ft_free_substring(paths);

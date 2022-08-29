@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   api_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 21:07:17 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/21 21:43:56 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:24:41 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int nbr_of_cmd_args(t_lexlist *tokenlist);
 int	convert_to_argv(t_minishell *shell, t_executor *exec)
 {
 	t_lexlist	*loop;
-	char		**cmd;
 	int			argc;
 	int			i;
 	
@@ -32,8 +31,8 @@ int	convert_to_argv(t_minishell *shell, t_executor *exec)
 	while (loop && i < exec->amt_of_cmds)
 	{
 		argc = nbr_of_cmd_args(loop);
-		exec->process[i].cmd = make_arg(argc, &loop);
 		exec->process[i].index = loop->field_by_pipe;
+		exec->process[i].cmd = make_arg(argc, &loop);
 		i++;
 		if (loop)
 			loop = loop->next;

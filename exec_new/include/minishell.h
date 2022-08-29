@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/22 15:08:47 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:11:37 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,6 @@ typedef struct s_executor {
 }	t_executor;
 */
 
-typedef struct s_executor {
-	t_command	*process;
-	char		**env;
-	int			tmpin;
-	int			tmpout;
-	int			**fdpipe;
-	int			amt_of_cmds;
-	int			id;
-}	t_executor;
-
 typedef struct s_command {
 	char	**cmd;
 	int		index;
@@ -74,6 +64,16 @@ typedef struct s_command {
 	char	**infile;
 	char	**outfile;
 }	t_command;
+
+typedef struct s_executor {
+	t_command	*process;
+	char		**env;
+	int			tmpin;
+	int			tmpout;
+	int			**fdpipe;
+	int			amt_of_cmds;
+	int			id;
+}	t_executor;
 
 typedef struct s_envlist {
 	char					*variable;
@@ -174,13 +174,13 @@ void			exit_w_error(char *message);
 
 /* API */
 int				lex_length(t_lexlist *tokenlist);
-int				convert_to_argv(t_minishell *shell);
+// int				convert_to_argv(t_minishell *shell);
 int				ft_nbr_of_cmds(t_lexlist *tokenlist);
 int				check_redirect_file(t_minishell *shell);
 
 /* Executor commands */
 int				execution_handler(t_minishell *shell);
-int				exe_lib(t_minishell *shell);
+// int				exe_lib(t_minishell *shell);
 int				redirect_output(t_executor *exec);
 
 /* Free */
@@ -196,4 +196,9 @@ void			ft_exit(char *mess, t_minishell *minishell);
 void			print_arr(char **arr);
 int 			print_t_list(t_list *list);
 
+/*********************	NEW	********************/
+int				ft_api_handler(t_minishell *shell, t_executor *exec);
+int				convert_to_argv(t_minishell *shell, t_executor *exec);
+int				exe_lib(t_minishell *shell, t_executor *exec);
+char			*get_cmd_path(t_envlist *env, char **cmd);
 #endif

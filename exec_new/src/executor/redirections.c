@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 09:18:07 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/23 13:04:22 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:33:30 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,22 @@ int	check_for_valid_redirect(const char *redirect, int category)
 			return (1)
 	}
 	return (0)
+}
+
+int	check_redirect_file(t_minishell *shell)
+{
+	t_lexlist	*tmp;
+
+	tmp = NULL;
+	if (shell->redir_list)
+		tmp = shell->redir_list;
+	while (tmp)
+	{
+		if (tmp->token_category == CAT_REDIR_L)
+			shell->executor->infile = ft_strdup(tmp->token);
+		if (tmp->token_category == CAT_REDIR_R)
+			shell->executor->outfile = ft_strdup(tmp->token);
+		tmp = tmp->next;
+	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 11:52:14 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/20 16:27:12 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:47:01 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,48 @@ void	ft_libft_del(void *del)
 	substring = NULL;
 }
 
+void	ft_free_string(char *str)
+{
+	free(str);
+	str = NULL;
+}
+
+void	ft_free_commands(t_command *process, const int amt_of_cmds)
+{
+	int i;
+	
+	i = 0;
+	while (i < amt_of_cmds)
+	{
+		if (process[i].cmd)
+			ft_free_substring(process[i].cmd);
+		if (process[i].cmd_path)
+			ft_free_string(process[i].cmd_path);
+		if (process[i].infile)
+			ft_free_substring(process[i].infile);
+		if (process[i].outfile)
+			ft_free_substring(process[i].outfile);
+		i++;
+	}
+}
+
+// void	ft_free_fdpipes(int **fdpipe, const int amt_of_cmds)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < amt_of_cmds - 1)
+// 	{
+		
+// 	}	
+// }
+
 void	ft_free_executor(t_executor *exec)
 {
-	if (exec->cmd_path)
-		free(exec->cmd_path);
+	if (exec->process)
+		ft_free_commands(exec->process, exec->amt_of_cmds);
 	if (exec->env)
 		ft_free_substring(exec->env);
-	if (exec->argv)
-		ft_lstclear(&exec->argv, ft_libft_del);
-	if (exec->infile)
-		free(exec->infile);
-	if (exec->outfile)
-		free(exec->outfile);
 	if (exec)
 		free(exec);
 }

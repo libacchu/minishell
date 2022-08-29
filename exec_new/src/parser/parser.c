@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 12:15:19 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/20 16:59:13 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:48:12 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	parse(char *command_buf, t_minishell *minishell)
 {
 	ft_initialize_scan(command_buf, minishell);
 	ft_refine_scan(minishell);
-	ft_printlexlist_checker(minishell);
+	// ft_printlexlist_checker(minishell);
 	return (0);
 }

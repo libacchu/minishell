@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/20 16:28:39 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/23 22:45:41 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,11 @@ SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_to_array.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_len.c \
 		$(SRC_DIR)/builtins/env_real/ft_env_add_back.c \
+		$(SRC_DIR)/api/api_command.c \
+		$(SRC_DIR)/api/api.c \
+		$(SRC_DIR)/api/api_pipe_count.c \
 		$(SRC_DIR)/executor/executor.c \
-		$(SRC_DIR)/executor/exe_library.c \
-		$(SRC_DIR)/executor/api.c \
+		$(SRC_DIR)/executor/get_cmd_path.c \
 		$(SRC_DIR)/errors/errors01.c \
 		$(SRC_DIR)/free/ft_free_executor.c \
 		$(SRC_DIR)/free/ft_free_lexlist.c \
