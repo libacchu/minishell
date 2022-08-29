@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:56:30 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/23 23:11:37 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:34:26 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,4 +201,6 @@ int				ft_api_handler(t_minishell *shell, t_executor *exec);
 int				convert_to_argv(t_minishell *shell, t_executor *exec);
 int				exe_lib(t_minishell *shell, t_executor *exec);
 char			*get_cmd_path(t_envlist *env, char **cmd);
+int 			ft_pipes_handler(t_executor *exec);
+int 			dup_std_in_out(t_executor *executor);
 #endif

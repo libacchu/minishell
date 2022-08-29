@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 11:52:14 by mluik             #+#    #+#             */
-/*   Updated: 2022/08/23 23:47:01 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/29 13:56:08 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ void	ft_free_commands(t_command *process, const int amt_of_cmds)
 			ft_free_substring(process[i].cmd);
 		if (process[i].cmd_path)
 			ft_free_string(process[i].cmd_path);
-		if (process[i].infile)
-			ft_free_substring(process[i].infile);
-		if (process[i].outfile)
-			ft_free_substring(process[i].outfile);
+		// if (process[i].infile)
+		// 	ft_free_substring(process[i].infile);
+		// ft_printf("----- D -----\n");
+		// if (process[i].outfile)
+		// 	ft_free_substring(process[i].outfile);
+		// ft_printf("----- E -----\n");
 		i++;
 	}
 }

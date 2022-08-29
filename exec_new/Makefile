@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 22:39:01 by libacchu          #+#    #+#              #
-#    Updated: 2022/08/23 22:45:41 by libacchu         ###   ########.fr        #
+#    Updated: 2022/08/29 14:49:40 by libacchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/api/api.c \
 		$(SRC_DIR)/api/api_pipe_count.c \
 		$(SRC_DIR)/executor/executor.c \
+		$(SRC_DIR)/executor/pipes.c \
 		$(SRC_DIR)/executor/get_cmd_path.c \
 		$(SRC_DIR)/errors/errors01.c \
 		$(SRC_DIR)/free/ft_free_executor.c \
