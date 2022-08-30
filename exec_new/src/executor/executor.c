@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 21:55:54 by libacchu          #+#    #+#             */
-/*   Updated: 2022/08/29 17:38:45 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:45:05 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,57 @@ int multi_commands(t_minishell *shell, t_executor *exec)
 	*/
 	int i;
 	
-	dup_std_in_out(exec);
 	ft_pipes_handler(exec);
+	// i = 0;
+	// while (i < exec->amt_of_cmds)
+	// {
+	// 	ft_printf("fdin = %d\n", exec->process[i].fdin);
+	// 	ft_printf("fdout = %d\n", exec->process[i].fdout);
+	// 	i++;
+	// }
 	i = 0;
-	while (i < (exec->amt_of_cmds - 1))
+	ft_printf("--- HERE ---\n");
+	while (i < exec->amt_of_cmds)
+	{
+		ft_printf("----- cmd = %s-----\n", exec->process[i].cmd[0]);
+		i++;
+	}
+	i = 0;
+	while (i < exec->amt_of_cmds)
 	{
 		// ft_redirections();
-		STDOUT_FILENO = dup(exec->process[i].fdout);
+		// STDOUT_FILENO = dup(exec->process[i].fdout);
 		// dup2(STDIN_FILENO, exec->process[i].fdin);
 		// // close(exec->process[i].fdout);
 		// dup2(STDOUT_FILENO, exec->process[i].fdout);
+		// close(exec->process[i].fdin);
+		
+		// close(exec->process[i].fdout);
+		
 		shell->executor->id = fork();
 		if (shell->executor->id == 0)
 		{
 			dup2(exec->process[i].fdin, STDIN_FILENO);
+			dup2(exec->process[i].fdout, STDOUT_FILENO);
+			ft_printf("----------\n");
+			ft_printf("cmd = %s\n", exec->process[i].cmd[0]);
 			if (is_builtin_cmd(shell->executor->process->cmd))
 				exe_builtin(shell, shell->executor->process->cmd);
 			else
 			{
-					exe_lib(shell, shell->executor);
+				exe_lib(shell, shell->executor);
 			}
 		}
 		if (shell->executor->id != 0)
 		{
 			waitpid(shell->executor->id, NULL, 0);
 		}
+		dup2(exec->tmpin, STDIN_FILENO);
+		dup2(exec->tmpout, STDOUT_FILENO);
+		close(exec->tmpin);
+		close(exec->tmpout);
+		// close(exec->process[i].fdin);
+		// close(exec->process[i].fdout);
 		// close(exec->process[i].fdin);
 		i++;
 	}
@@ -106,5 +132,6 @@ int	exe_lib(t_minishell *shell, t_executor *exec)
 	if (!cmd_path)
 		ft_printf("minishell: %s: No such file or directory\n", exec->process->cmd[0]);
 	execve(cmd_path, exec->process->cmd, shell->executor->env);
+	//exit
 	return (0);
 }
