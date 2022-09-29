@@ -6,7 +6,7 @@
 /*   By: libacchu <libacchu@students.42wolfsburg.de +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 21:55:54 by libacchu          #+#    #+#             */
-/*   Updated: 2022/09/29 01:26:45 by libacchu         ###   ########.fr       */
+/*   Updated: 2022/09/29 02:56:43 by libacchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	multi_commands(t_minishell *shell, t_executor *exec)
 	int	i;
 	int	j;
 
+/*---------------------------------------------------------------------------------------------------*/
 	i = 0;
 	exec->fdpipe = ft_calloc(sizeof(int *), shell->pipe_counter);
 	if (!exec->fdpipe)
@@ -98,31 +99,58 @@ int	multi_commands(t_minishell *shell, t_executor *exec)
 		}
 		i++;
 	}
+/*---------------------------------------------------------------------------------------------------*/
 	i = 0;
 	while (i < shell->pipe_counter + 1)
 	{
 		exec->cmd_nodes[i].fork_id = fork();
 		if (exec->cmd_nodes[i].fork_id == 0)
 		{
-			if (i == 0)
+/*---------------------------------------------------------------------------------------------------*/
+			/* REDIRECT IN */
+			if (exec->cmd_nodes[i].infile)
 			{
-				dup2(exec->fdpipe[i][1], STDOUT_FILENO);
-			}
-			else if (i == shell->pipe_counter)
-			{
-				dup2(exec->fdpipe[i - 1][0], STDIN_FILENO);
+				/* if CAT_REDIR_L */
+				exec->fdin = open(*exec->cmd_nodes[i].infile, O_RDONLY);
+				/* else if CAT_REDIR_LL */
+					// HEREDOC
 			}
 			else
 			{
-				dup2(exec->fdpipe[i - 1][0], STDIN_FILENO);
-				dup2(exec->fdpipe[i][1], STDOUT_FILENO);
+				if (i == 0)
+					exec->fdin = STDIN_FILENO;
+				else if (i == shell->pipe_counter)
+					exec->fdin = exec->fdpipe[i - 1][0];
 			}
+/*---------------------------------------------------------------------------------------------------*/
+			/* REDIRECT OUT */
+	 		if (exec->cmd_nodes[i].outfile)
+			{
+				/* if CAT_REDIR_R */
+				exec->fdout = open(*exec->cmd_nodes[i].outfile, \
+					O_WRONLY | O_CREAT | O_TRUNC);
+				/* else if CAT_REDIR_RR */
+				exec->fdout = open(*exec->cmd_nodes[i].outfile, \
+					O_WRONLY | O_CREAT | O_APPEND);
+			}
+			else
+			{
+				if (i == shell->pipe_counter)
+					exec->fdout = STDOUT_FILENO;
+				else
+					exec->fdout = exec->fdpipe[i][1];
+			}
+/*---------------------------------------------------------------------------------------------------*/
+			dup2(exec->fdin, STDIN_FILENO);
+			dup2(exec->fdout, STDOUT_FILENO);
+/*---------------------------------------------------------------------------------------------------*/
 			j = 0;
 			while (j < shell->pipe_counter)
 			{
 				close(exec->fdpipe[j][1]);
 				j++;
 			}
+/*---------------------------------------------------------------------------------------------------*/
 			if (is_builtin_cmd(shell->executor->cmd_nodes[i].argv))
 			{
 				exe_builtin(shell, shell->executor->cmd_nodes[i].argv);
@@ -134,8 +162,10 @@ int	multi_commands(t_minishell *shell, t_executor *exec)
 				exe_lib(shell, shell->executor, i);
 			}
 		}
+/*---------------------------------------------------------------------------------------------------*/
 		i++;
 	}
+/*---------------------------------------------------------------------------------------------------*/
 	i = 0;
 	while (i < shell->pipe_counter)
 	{
@@ -143,6 +173,7 @@ int	multi_commands(t_minishell *shell, t_executor *exec)
 		close(exec->fdpipe[i][0]);
 		i++;
 	}
+/*---------------------------------------------------------------------------------------------------*/
 	i = 0;
 	while (i < shell->pipe_counter + 1)
 	{
@@ -152,27 +183,29 @@ int	multi_commands(t_minishell *shell, t_executor *exec)
 	return (0);
 }
 
-
-			// /* REDIRECT IN */
-			// if (exec->cmd_nodes[i].infile)
-			// 	exec->fdin = open(*exec->cmd_nodes[i].infile, O_RDONLY);
-			// else
-			// {
-			// 	exec->fdin = dup(STDIN_FILENO);
-			// }
-		// dup2(exec->fdin, STDIN_FILENO);
-		// close(exec->fdin);
-
-		// /* REDIRECT OUT */
-		// if (i == shell->pipe_counter)
-		// {
-		// 	// if (exec->cmd_nodes[i].outfile)
-		// 	// 	exec->fdout = open(*exec->cmd_nodes[i].outfile, O_CREAT);
-		// 	// else
-		// 		dup2(exec->fdout, STDOUT_FILENO);
-		// }
-		// else
-		// {
-		// }
-		// dup2(exec->fdout, STDOUT_FILENO);
-		// close(exec->fdout);
+	// if (i == 0)
+	// {
+	// 	dup2(exec->fdout, STDOUT_FILENO);
+	// }
+	// else if (i == shell->pipe_counter)
+	// {
+	// 	dup2(exec->fdin, STDIN_FILENO);
+	// }
+	// else
+	// {
+	// 	dup2(exec->fdin, STDIN_FILENO);
+	// 	dup2(exec->fdout, STDOUT_FILENO);
+	// }
+	// if (i == 0)
+	// {
+	// 	dup2(exec->fdpipe[i][1], STDOUT_FILENO);
+	// }
+	// else if (i == shell->pipe_counter)
+	// {
+	// 	dup2(exec->fdpipe[i - 1][0], STDIN_FILENO);
+	// }
+	// else
+	// {
+	// 	dup2(exec->fdpipe[i - 1][0], STDIN_FILENO);
+	// 	dup2(exec->fdpipe[i][1], STDOUT_FILENO);
+	// }
