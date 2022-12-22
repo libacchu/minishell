@@ -1,4 +1,5 @@
-# Minishell_01
+# Minishell
+group project of libacchu and mluik
 
 ## Description
 The objective of this project is for you to create a simple shell. Yes, my own bash!
